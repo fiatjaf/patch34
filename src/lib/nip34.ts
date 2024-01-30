@@ -10,11 +10,9 @@ export type Repo = {
   id: string
   name?: string
   description?: string
-  head?: string
   web: string[]
   clone: string[]
-  patches: string[]
-  issues: string[]
+  relays: string[]
   sourceRelays: string[] // where this event was found, if available
 }
 
@@ -22,10 +20,9 @@ export function parseRepo(evt: Event, sourceRelays: string[] = []): Repo {
   const repo: Repo = {
     event: evt,
     id: '',
-    patches: [],
-    issues: [],
     clone: [],
     web: [],
+    relays: [],
     sourceRelays,
 
     get guid(): string {
@@ -59,10 +56,9 @@ export function parseRepo(evt: Event, sourceRelays: string[] = []): Repo {
         repo.clone!.push(...tag.slice(1))
         break
       case 'patches':
-        repo.patches!.push(...tag.slice(1))
-        break
       case 'issues':
-        repo.issues!.push(...tag.slice(1))
+      case 'relays':
+        repo.relays!.push(...tag.slice(1))
         break
     }
   }

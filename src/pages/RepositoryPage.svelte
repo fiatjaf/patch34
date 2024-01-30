@@ -35,7 +35,7 @@
 
   async function loadPatches() {
     pool.subscribeMany(
-      repo.patches,
+      repo.relays,
       [{kinds: [1617], '#a': [`30617:${repo.event.pubkey}:${repo.id}`]}],
       {
         onevent(evt) {
@@ -78,9 +78,6 @@
     <section class="bg-sky-200 mt-2 py-2 px-4 rounded">
       <h2 class="text-2xl px-4 py-2 text-center">info</h2>
       {#if repo.description}<div>{repo.description}</div>{/if}
-      {#if repo.head}<div>
-          head: <span class="font-mono">{repo.head}</span>
-        </div>{/if}
       <div class="mt-2">clone</div>
       <div class="ml-2 flex flex-col">
         {#each repo.clone as url}
@@ -99,14 +96,7 @@
       </div>
       <div class="mt-2">relays</div>
       <div class="ml-2 flex flex-col">
-        {#each repo.patches as url}
-          <div class="mr-2">
-            {url}
-          </div>
-        {/each}
-      </div>
-      <div class="ml-2 flex flex-col">
-        {#each repo.issues as url}
+        {#each repo.relays as url}
           <div class="mr-2">
             {url}
           </div>
