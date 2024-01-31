@@ -51,6 +51,7 @@
         },
         oneose() {
           eoseHappened = true
+          patches.sort((a, b) => b.event.created_at - a.event.created_at)
           patches = patches.map(patch => {
             patch.sourceRelays = Array.from(
               pool.seenOn.get(patch.event.id)?.values?.() || []

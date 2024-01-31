@@ -32,7 +32,7 @@
               )
 
               if (idx === -1) {
-                repos.push(repo)
+                repos.unshift(repo)
               } else if (repo.event.created_at > repos[idx].event.created_at) {
                 repos[idx] = repo
               } else return
@@ -58,8 +58,10 @@
         },
         oneose() {
           eoseHappened = true
+          repos.sort((a, b) => b.event.created_at - a.event.created_at)
           repos = repos
 
+          patches.sort((a, b) => b.event.created_at - a.event.created_at)
           patches = patches.map(patch => {
             patch.sourceRelays = Array.from(
               pool.seenOn.get(patch.event.id)?.values?.() || []
