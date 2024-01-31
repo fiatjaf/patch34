@@ -88,8 +88,8 @@ export function parsePatch(
   sourceRelays: string[] = []
 ): Patch | null {
   const [preamble, rest] = evt.content.split('\n---\n')
-  const diffStart = rest.match(/\n \w/)?.index
-  if (!diffStart) return null
+  const diffStart = rest.match(/^ \w.* +\| +\d+ +[+-]+/m)?.index
+  if (diffStart === undefined) return null
   const comment = rest.substring(0, diffStart)
   const diff = rest.substring(diffStart + 1)
 
